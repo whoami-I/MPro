@@ -36,7 +36,7 @@ import java.util.*
  * @since 17/2/18
  */
 object GlobalUtil {
-    val sharedPreferences: SharedPreferences = MProApplication.context.getSharedPreferences(
+    val sharedPreferences: SharedPreferences = AppApplication.context.getSharedPreferences(
         GlobalUtil.appPackage + "_preferences",
         Context.MODE_PRIVATE
     )
@@ -48,21 +48,21 @@ object GlobalUtil {
      * @return 当前应用程序的包名。
      */
     val appPackage: String
-        get() = MProApplication.context.packageName
+        get() = AppApplication.context.packageName
 
     /**
      * 获取当前应用程序的名称。
      * @return 当前应用程序的名称。
      */
     val appName: String
-        get() = MProApplication.context.resources.getString(MProApplication.context.applicationInfo.labelRes)
+        get() = AppApplication.context.resources.getString(AppApplication.context.applicationInfo.labelRes)
 
     /**
      * 获取当前应用程序的版本名。
      * @return 当前应用程序的版本名。
      */
     val appVersionName: String
-        get() = MProApplication.context.packageManager.getPackageInfo(appPackage, 0).versionName
+        get() = AppApplication.context.packageManager.getPackageInfo(appPackage, 0).versionName
 
     /**
      * 获取当前应用程序的版本号。
@@ -70,9 +70,9 @@ object GlobalUtil {
      */
     val appVersionCode: Long
         get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            MProApplication.context.packageManager.getPackageInfo(appPackage, 0).longVersionCode
+            AppApplication.context.packageManager.getPackageInfo(appPackage, 0).longVersionCode
         } else {
-            MProApplication.context.packageManager.getPackageInfo(appPackage, 0)
+            AppApplication.context.packageManager.getPackageInfo(appPackage, 0)
                 .versionCode.toLong()
         }
 
@@ -92,7 +92,7 @@ object GlobalUtil {
 
 
     fun screenPixel(): String {
-        MProApplication.context.resources.displayMetrics.run {
+        AppApplication.context.resources.displayMetrics.run {
             return "${widthPixels}X${heightPixels}"
         }
     }
@@ -138,7 +138,7 @@ object GlobalUtil {
             if ("google" != appChannel || "samsung" != appChannel) {
                 try {
                     deviceId = Settings.Secure.getString(
-                        MProApplication.context.contentResolver,
+                        AppApplication.context.contentResolver,
                         Settings.Secure.ANDROID_ID
                     )
                 } catch (e: Exception) {
@@ -169,7 +169,7 @@ object GlobalUtil {
      * @return 字符串资源id对应的字符串内容。
      */
     fun getString(resId: Int): String {
-        return MProApplication.context.resources.getString(resId)
+        return AppApplication.context.resources.getString(resId)
     }
 
     /**
@@ -180,7 +180,7 @@ object GlobalUtil {
      * @return 字符串资源id对应的字符串内容。
      */
     fun getDimension(resId: Int): Int {
-        return MProApplication.context.resources.getDimensionPixelOffset(resId)
+        return AppApplication.context.resources.getDimensionPixelOffset(resId)
     }
 
     /**
@@ -193,7 +193,7 @@ object GlobalUtil {
      * @return 指定资源名的资源id。
      */
     fun getResourceId(name: String, type: String): Int {
-        return MProApplication.context.resources.getIdentifier(name, type, appPackage)
+        return AppApplication.context.resources.getIdentifier(name, type, appPackage)
     }
 
     /**
@@ -205,7 +205,7 @@ object GlobalUtil {
     fun getApplicationMetaData(key: String): String? {
         var applicationInfo: ApplicationInfo? = null
         try {
-            applicationInfo = MProApplication.context.packageManager.getApplicationInfo(
+            applicationInfo = AppApplication.context.packageManager.getApplicationInfo(
                 appPackage,
                 PackageManager.GET_META_DATA
             )
@@ -223,7 +223,7 @@ object GlobalUtil {
      */
     fun isInstalled(packageName: String): Boolean {
         val packageInfo: PackageInfo? = try {
-            MProApplication.context.packageManager.getPackageInfo(packageName, 0)
+            AppApplication.context.packageManager.getPackageInfo(packageName, 0)
         } catch (e: PackageManager.NameNotFoundException) {
             null
         }
@@ -234,7 +234,7 @@ object GlobalUtil {
      * 获取当前应用程序的图标。
      */
     fun getAppIcon(): Drawable {
-        val packageManager = MProApplication.context.packageManager
+        val packageManager = AppApplication.context.packageManager
         val applicationInfo = packageManager.getApplicationInfo(appPackage, 0)
         return packageManager.getApplicationIcon(applicationInfo)
     }

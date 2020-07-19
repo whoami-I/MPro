@@ -12,7 +12,7 @@ import timber.log.Timber
 import java.io.IOException
 import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class TestActivity : AppCompatActivity() {
     var BASE_URL = "https://api.github.com/users/"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
